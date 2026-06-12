@@ -1,0 +1,25 @@
+{
+  "_version": "2",
+  "name": "VivifyQuest",
+  "id": "vivify-quest",
+  "author": "YourName",
+  "version": "0.1.0",
+  "description": "Vivify PCVR Bundle Loader for Quest 1.40.8",
+  "downloadLink": "https://github.com/vivify-working-PCVR-BUNDLE/releases/download/v0.1.0/VivifyQuest.qmod",
+  "packageId": "com.beatgames.beatsaber",
+  "packageVersion": "1.40.8_6325176147",
+  "dependencies": [
+    {
+      "id": "scotland2",
+      "version": "^1.0.0"
+    },
+    {
+      "id": "beatsaber-hook",
+      "version": "^5.0.0"
+    }
+  ],
+  "modFiles": [
+    "libvivify-quest.so"
+  ],
+  "libraryFiles": []
+}
