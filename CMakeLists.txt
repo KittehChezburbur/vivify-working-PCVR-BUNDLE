@@ -1,19 +1,18 @@
-cmake_minimum_required(VERSION 3.10)
-project(VivifyQuest)
+cmake_minimum_required(VERSION 3.16)
+project(vivify)
 
-set(METADATA_ID "vivify-quest")
-set(METADATA_NAME "Vivify Quest")
+set(METADATA_ID "vivify")
+set(METADATA_NAME "Vivify")
 
-# Set the Android NDK for GitHub Actions
+# Scotland2 requirement
 set(CMAKE_CXX_STANDARD 20)
 
-# Add your source files here
+# Define where your code is
 add_library(${METADATA_ID} SHARED
     src/main.cpp
-    # Add other .cpp files as you create them
 )
 
-# Standard Quest Mod linkages
+# Connect to the Beat Saber headers (v1.40.8)
 target_link_libraries(${METADATA_ID}
     modloader
     beatsaber-hook_5
