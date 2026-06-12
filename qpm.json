@@ -2,21 +2,18 @@
   "sharedDir": "shared",
   "dependenciesDir": "extern",
   "info": {
-    "name": "vivify",
-    "id": "vivify",
-    "version": "0.1.0",
-    "url": "https://github.com/your-username/your-repo"
+    "name": "vivify-quest",
+    "id": "vivify-quest",
+    "version": "0.1.0"
   },
   "dependencies": [
     {
       "id": "beatsaber-hook",
-      "version": "^5.0.0",
-      "additionalData": {}
+      "version": "^5.0.0"
     },
     {
       "id": "scotland2",
-      "version": "^1.2.0",
-      "additionalData": {}
+      "version": "^1.2.0"
     }
   ]
 }
