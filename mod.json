@@ -4,7 +4,7 @@
   "id": "vivify-quest",
   "author": "YourName",
   "version": "0.1.0",
-  "description": "Port of Vivify for Quest 1.40.8",
+  "description": "Vivify PCVR Bundle Bridge",
   "packageId": "com.beatgames.beatsaber",
   "packageVersion": "1.40.8_6325176147",
   "dependencies": [
