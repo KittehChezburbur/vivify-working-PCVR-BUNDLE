@@ -9,19 +9,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
       - name: Install QPM
         run: |
-          # 1. Get the URL for the latest release of QPM.CLI
-          # 2. Filter for the linux binary specifically
-          # 3. Download it dynamically
-          URL=$(curl -s https://api.github.com/repos/QuestPackageManager/QPM.CLI/releases/latest | \
-                grep "browser_download_url" | grep "qpm-linux-x64" | head -n 1 | cut -d '"' -f 4)
-          
-          echo "Found latest QPM binary at: $URL"
-          wget -q "$URL" -O qpm
-          chmod +x qpm
-          sudo mv qpm /usr/local/bin/qpm
-          qpm --version
+          # Install the tool via the official NuGet feed
+          dotnet tool install --global QPM.CLI
+          # Add the .dotnet/tools folder to the path
+          echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
       - name: QPM Restore
         env:
@@ -47,4 +45,3 @@ jobs:
           path: |
             build/*.qmod
             build/*.so
-          
