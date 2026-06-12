@@ -1,28 +1,26 @@
-name: Build Vivify Quest
+name: Build v1.40.8 Mod
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - name: Setup QPM
         uses: iced-mocha/setup-qpm@v1
         with:
           version: 'latest'
 
-      - name: QPM Dependencies
-        run: |
-          qpm restore
-          
-      - name: Build Mod
-        run: |
-          qpm qmod build
-          
+      - name: QPM Restore
+        run: qpm restore
+
+      - name: Build
+        run: qpm qmod build --release
+
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
-          name: Vivify-Quest-v1.40.8
-          path: './build/*.qmod'
+          name: VivifyQuest-v1.40.8
+          path: ./*.qmod
