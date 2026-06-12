@@ -6,37 +6,38 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install QPM
         run: |
-          # Use a direct, proven mirror path for the CLI
-          curl -L https://github.com/QuestPackageManager/QPM.CLI/releases/download/v0.1.20/qpm-linux-x64 -o /usr/local/bin/qpm
-          chmod +x /usr/local/bin/qpm
+          # 1. Download the file
+          curl -L -f -o qpm https://github.com/QuestPackageManager/QPM.CLI/releases/download/v0.1.20/qpm-linux-x64
+          
+          # 2. Verify it's a binary, not an HTML error page
+          if ! file qpm | grep -q "ELF"; then
+            echo "Error: Downloaded file is not a binary. Check the URL."
+            cat qpm
+            exit 1
+          fi
+          
+          # 3. If it IS a binary, install it
+          chmod +x qpm
+          sudo mv qpm /usr/local/bin/qpm
           qpm --version
 
       - name: QPM Restore
         env:
           QPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          qpm collect
-          qpm restore
+        run: qpm restore
 
-      - name: Setup Android NDK
-        uses: nttld/setup-ndk@v1
-        with:
-          ndk-version: r26b
-
-      - name: Build Project
+      - name: Build
         run: |
           cmake -S . -B build -DANDROID_ABI=arm64-v8a
           cmake --build build
-        
-      - name: Upload Artifact
+
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: Vivify-Mod
-          path: |
-            build/*.qmod
-            build/*.so
+          path: build/*.qmod
