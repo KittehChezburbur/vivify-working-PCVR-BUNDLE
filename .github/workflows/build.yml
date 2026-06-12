@@ -9,17 +9,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
       - name: Install QPM
         run: |
-          # Install the tool via the official NuGet feed
-          dotnet tool install --global QPM.CLI
-          # Add the .dotnet/tools folder to the path
-          echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+          # Use a direct, proven mirror path for the CLI
+          curl -L https://github.com/QuestPackageManager/QPM.CLI/releases/download/v0.1.20/qpm-linux-x64 -o /usr/local/bin/qpm
+          chmod +x /usr/local/bin/qpm
+          qpm --version
 
       - name: QPM Restore
         env:
