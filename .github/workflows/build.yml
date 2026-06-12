@@ -9,21 +9,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install QPM
-        run: |
-          # Fetch the latest QPM CLI binary
-          LATEST_URL=$(curl -s https://api.github.com/repos/QuestPackageManager/QPM.CLI/releases/latest | grep "browser_download_url" | grep "qpm-linux-x64" | cut -d '"' -f 4)
-          wget -q $LATEST_URL -O qpm
-          chmod +x qpm
-          sudo mv qpm /usr/local/bin/qpm
-          qpm --version
+      - name: Setup QPM
+        uses: QuestPackageManager/qpm-action@main
+        with:
+          workflow_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: QPM Restore
-        env:
-          QPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          qpm collect
-          qpm restore
+        run: qpm restore
 
       - name: Setup Android NDK
         uses: nttld/setup-ndk@v1
