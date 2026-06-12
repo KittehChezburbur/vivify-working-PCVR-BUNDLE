@@ -9,18 +9,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
       - name: Install QPM
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Install the tool via the official global tool command
-          dotnet tool install --global QPM.CLI
-          # Ensure the tool is in your path
-          echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-          # Verify installation
+          # Use GitHub CLI to get the latest release asset URL
+          # This avoids hardcoding version numbers or broken URLs
+          gh release download --repo QuestPackageManager/QPM.CLI --pattern "qpm-linux-x64" --output qpm
+          chmod +x qpm
+          sudo mv qpm /usr/local/bin/qpm
           qpm --version
 
       - name: QPM Restore
