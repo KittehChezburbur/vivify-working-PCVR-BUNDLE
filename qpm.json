@@ -1,0 +1,22 @@
+{
+  "sharedDir": "shared",
+  "dependenciesDir": "extern",
+  "info": {
+    "name": "vivify",
+    "id": "vivify",
+    "version": "0.1.0",
+    "url": "https://github.com/your-username/your-repo"
+  },
+  "dependencies": [
+    {
+      "id": "beatsaber-hook",
+      "version": "^5.0.0",
+      "additionalData": {}
+    },
+    {
+      "id": "scotland2",
+      "version": "^1.2.0",
+      "additionalData": {}
+    }
+  ]
+}
