@@ -11,9 +11,14 @@ jobs:
 
       - name: Install QPM
         run: |
-          # Download QPM directly from the verified stable release
-          # This URL is the standard for the current QPM versioning
-          wget https://github.com/QuestPackageManager/QPM.CLI/releases/download/v0.2.1/qpm-linux-x64 -O qpm
+          # 1. Get the URL for the latest release of QPM.CLI
+          # 2. Filter for the linux binary specifically
+          # 3. Download it dynamically
+          URL=$(curl -s https://api.github.com/repos/QuestPackageManager/QPM.CLI/releases/latest | \
+                grep "browser_download_url" | grep "qpm-linux-x64" | head -n 1 | cut -d '"' -f 4)
+          
+          echo "Found latest QPM binary at: $URL"
+          wget -q "$URL" -O qpm
           chmod +x qpm
           sudo mv qpm /usr/local/bin/qpm
           qpm --version
@@ -42,3 +47,4 @@ jobs:
           path: |
             build/*.qmod
             build/*.so
+          
