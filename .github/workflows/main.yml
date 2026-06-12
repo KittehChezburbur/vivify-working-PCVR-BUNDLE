@@ -1,0 +1,26 @@
+name: Build Mod
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup QPM
+        uses: iced-mocha/setup-qpm@v1
+        with:
+          version: 'latest'
+
+      - name: QPM Restore
+        run: qpm restore
+
+      - name: Build
+        run: qpm qmod build --release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: VivifyQuest.qmod
+          path: ./*.qmod
